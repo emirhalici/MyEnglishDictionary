@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_marginBottom="8dp"
-            android:text="the process or fact of entering or being allowed to enter a place or organization."
+            android:text="id diam maecenas ultricies mi eget mauris pharetra et ultrices neque ornare aenean euismod elementum nisi quis eleifend quam adipiscing vitae proin"
             android:textSize="14dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/linearLayout"
@@ -48,7 +48,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="0dp"
                 android:maxWidth="280dp"
-                android:text="Praesent vitaue lecrrmentum Praesent vitaue lecrrmentum"
+                android:text="et malesuada fames ac turpis egestas maecenas pharetra"
                 android:textAlignment="textStart"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textSize="20dp"
@@ -66,7 +66,7 @@
                 android:layout_marginRight="0dp"
                 android:layout_toEndOf="@+id/tv_word"
                 android:maxWidth="190dp"
-                android:text="elementum elementum elementum"
+                android:text="tellus orci ac auctor augue"
                 android:textAlignment="textEnd"
                 android:textSize="20dp" />
 
