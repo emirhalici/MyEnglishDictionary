@@ -1,0 +1,65 @@
+<resources>
+    <string name="app_name">MyEnglishDictionary</string>
+    <string name="Home">Home</string>
+    <string name="Quiz">Quiz</string>
+    <string name="AddWord">Add Word</string>
+    <string name="ToastErrorResponse">Error while getting response.</string>
+    <string name="TextViewAddHint">Enter the word you\'re looking for.</string>
+    <string name="btn_add_manually">Add Manually</string>
+    <string name="btn_search_word">Search Word</string>
+    <string name="No">No</string>
+    <string name="Yes">Yes</string>
+    <string name="AddWordAlertDialogTitle">Are you sure?</string>
+    <string name="AddWordAlertDialogTitleMain">Are you sure?</string>
+    <string name="AddWordAlertDialogDeleteMessage">Do you want to delete the word %1$s?</string>
+    <string name="AddWordAlertDialogDeleteSuccess">Word deletion was successful.</string>
+    <string name="AddWordAlertDialogDeleteFail">Word deletion was unsuccessful.</string>
+    <string name="AddWordSuccess">Word added to dictionary successfully.</string>
+    <string name="AddWordFail">Failed to add the word to dictionary.</string>
+    <string name="EditWordSuccess">Word edited successfully.</string>
+    <string name="EditWordFailed">Failed to edit word.</string>
+    <string name="AddWordAlertDialogMessage">The word %1$s will be added to dictionary.</string>
+    <string name="AddWordAlertDialogMessageMain">What do you want to do with the word %1$s?</string>
+    <string name="AddWordAlertDialogEdit">Edit</string>
+    <string name="AddWordAlertDialogDelete">Delete</string>
+    <string name="AddWordEmptyBoxesError">Please fill the textboxes.</string>
+    <string name="AddWordEmptyBox">Please enter a word.</string>
+    <string name="Sort">Sort</string>
+    <string name="Search">Search</string>
+    <string name="DateAddedAscending">Date added (ascending)</string>
+    <string name="DateAddedDescending">Date added (descending)</string>
+    <string name="WordNameAscending">Word name (ascending)</string>
+    <string name="WordNameDescending">Word name (descending)</string>
+    <string name="WordTypeAscending">Word type (ascending)</string>
+    <string name="WordTypeDescending">Word type (descending)</string>
+    <string name="AboutMe">About Me</string>
+    <string name="AboutMeMessage">Hi! My name is Emir and this is my about me page.</string>
+    <string name="Filter">Filter</string>
+    <string name="Compact">Compact Mode</string>
+    <string name="Dark">Dark Mode</string>
+    <string name="Light">Light Mode</string>
+    <string name="ChangeTheme">Change Theme</string>
+    <string name="word">Word</string>
+    <string name="type">Type</string>
+    <string name="definition">Definition</string>
+    <string name="example">Example</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
+    <string name="ok">OK</string>
+    <string name="tickbox">Please tick checkboxes.</string>
+    <string name="pressToExit">Press again to exit.</string>
+    <string name="Next">Next</string>
+    <string name="QuestionCount">Question Count: %1$s</string>
+    <string name="CorrectCount">Correct Count: %1$s</string>
+    <string name="WrongCount">Wrong Count: %1$s</string>
+    <string name="SuccessRate">Success Rate: %1$s/100</string>
+    <!--
+    This string is used for square devices and overridden by hello_world in
+    values-round/strings.xml for round devices.
+    -->
+    <string name="hello_world">Hello Square World!</string>
+    <string name="endTest">End Test</string>
+    <string name="start">Start</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

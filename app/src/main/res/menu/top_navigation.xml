@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/app_bar_search"
+        android:icon="@drawable/ic_search_black_24dp"
+        android:title="@string/Search"
+        app:actionViewClass="android.widget.SearchView"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/aboutme"
+        android:title="@string/AboutMe"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/filter"
+        android:title="@string/Filter"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/compact"
+        android:title="@string/Compact"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/dark"
+        android:title="@string/ChangeTheme"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/sort"
+        android:title="@string/Sort"
+        app:showAsAction="never" >
+        <menu >
+            <item
+                android:id="@+id/date_asc"
+                android:title="@string/DateAddedAscending"
+                app:showAsAction="never" />
+            <item
+                android:id="@+id/date_desc"
+                android:title="@string/DateAddedDescending"
+                app:showAsAction="never" />
+            <item
+                android:id="@+id/word_asc"
+                android:title="@string/WordNameAscending"
+                app:showAsAction="never" />
+            <item
+                android:id="@+id/word_desc"
+                android:title="@string/WordNameDescending"
+                app:showAsAction="never" />
+            <item
+                android:id="@+id/type_asc"
+                android:title="@string/WordTypeAscending"
+                app:showAsAction="never" />
+            <item
+                android:id="@+id/type_desc"
+                android:title="@string/WordTypeDescending"
+                app:showAsAction="never" />
+
+        </menu>
+    </item>
+
+
+
+</menu>
