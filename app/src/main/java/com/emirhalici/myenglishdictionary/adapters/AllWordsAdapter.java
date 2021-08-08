@@ -195,8 +195,5 @@ public class  AllWordsAdapter extends RecyclerView.Adapter<AllWordsAdapter.eView
         return mWordList.size();
     }
 
-
-
-
 }
 

@@ -58,43 +58,66 @@ public class AddFragment extends Fragment {
         btn_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                JSONObject responseWord = null;
-                String word = tf_word.getEditText().getText().toString();
-                if (word!="") {
-                    word.toLowerCase();
-                    responseWord = ApiHelper.searchWord(word);
-                }
 
-                // if null then word is either incorrect or not absent in online dictionary
-                if (responseWord!=null) {
-                    ArrayList<WordModel> wordList = new ArrayList<>();
-                    try {
-                        JSONArray definitions = responseWord.getJSONArray("definitions");
-                        for (int i = 0; i < definitions.length(); i++) {
-                            JSONObject def = definitions.getJSONObject(i);
-                            WordModel wordModel = new WordModel(-1, word, def.getString("type"), def.getString("definition"), def.getString("example"));
-                            wordList.add(wordModel);
-                            mRecyclerView.setHasFixedSize(true);
-                            mLayoutManager = new LinearLayoutManager(getContext());
-                            mAdapter = new AddWordAdapter(wordList, getContext());
-                            mRecyclerView.setLayoutManager(mLayoutManager);
-                            mRecyclerView.setAdapter(mAdapter);
+                new Thread(new Runnable() {
+                    public void run() {
+                        // a potentially time consuming task
+
+                        JSONObject responseWord = null;
+                        String word = tf_word.getEditText().getText().toString();
+                        if (word!="") {
+                            word.toLowerCase();
+                            responseWord = ApiHelper.searchWord(word);
                         }
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                        // if null then word is either incorrect or not absent in online dictionary
+                        if (responseWord!=null) {
+                            ArrayList<WordModel> wordList = new ArrayList<>();
+                            try {
+                                JSONArray definitions = responseWord.getJSONArray("definitions");
+                                for (int i = 0; i < definitions.length(); i++) {
+                                    JSONObject def = definitions.getJSONObject(i);
+                                    WordModel wordModel = new WordModel(-1, word, def.getString("type"), def.getString("definition"), def.getString("example"));
+                                    wordList.add(wordModel);
 
-                }
-                else {
-                    // when it's null
-                    if (word.isEmpty()) {
-                        Toast.makeText(getContext(), getString(R.string.AddWordEmptyBox), Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getContext(), getString(R.string.ToastErrorResponse) , Toast.LENGTH_SHORT).show();
-                    }
+                                    getActivity().runOnUiThread(new Runnable() {
 
-                }
+                                        @Override
+                                        public void run() {
+                                            // Stuff that updates the UI
+                                            mRecyclerView.setHasFixedSize(true);
+                                            mLayoutManager = new LinearLayoutManager(getContext());
+                                            mAdapter = new AddWordAdapter(wordList, getContext());
+                                            mRecyclerView.setLayoutManager(mLayoutManager);
+                                            mRecyclerView.setAdapter(mAdapter);
+                                        }
+                                    });
+                                }
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                        else {
+                            // when it's null
+
+                            getActivity().runOnUiThread(new Runnable() {
+
+                                @Override
+                                public void run() {
+                                    // Stuff that updates the UI
+                                    if (word.isEmpty()) {
+                                        Toast.makeText(getContext(), getString(R.string.AddWordEmptyBox), Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(getContext(), getString(R.string.ToastErrorResponse) , Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                        }
+                    }
+                }).start();
+
             }
         });
     }

@@ -66,6 +66,8 @@ public class AboutFragment extends Fragment {
         menu.findItem(R.id.app_bar_search).setVisible(false);
         menu.findItem(R.id.dark).setVisible(false);
         menu.findItem(R.id.aboutme).setVisible(false);
+        menu.findItem(R.id.aboutme).setVisible(true);
+
         super.onCreateOptionsMenu(menu, inflater);
     }
 

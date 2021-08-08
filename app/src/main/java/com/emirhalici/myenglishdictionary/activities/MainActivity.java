@@ -57,11 +57,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // hotfix for android.os.NetworkOnMainThreadException
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
-        // holy shit it really worked.
-        // i don't know what i'm doing.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
@@ -106,7 +101,6 @@ public class MainActivity extends AppCompatActivity {
             menu.findItem(R.id.type_desc).setVisible(false);
         }
 
-
         // search
         SearchManager manager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView search = (SearchView) menu.findItem(R.id.app_bar_search).getActionView();
@@ -140,7 +134,6 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-
     // call invalidateOptionsMenu() to call this method
     // it is for disabling most menu items when not in home fragment
     @Override
@@ -160,8 +153,6 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onPrepareOptionsMenu(menu);
     }
-
-    
 
     // top navigation menu listener
     @Override
@@ -278,7 +269,6 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-
     }
 
     public void openHomeFragment(String sortType) {
@@ -320,7 +310,6 @@ public class MainActivity extends AppCompatActivity {
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).addToBackStack("quizFragment").commit();
                     break;
             }
-
             return true;
 
         }
@@ -333,6 +322,7 @@ public class MainActivity extends AppCompatActivity {
                 myFragment instanceof AddFragment || myFragment instanceof QuizEndFragment)) {
             if (backPressedTime+1000>System.currentTimeMillis()) {
                 backToast.cancel();
+                finish();
                 return;
             } else {
                 backToast = Toast.makeText(this, getString(R.string.pressToExit), Toast.LENGTH_SHORT);
@@ -351,7 +341,5 @@ public class MainActivity extends AppCompatActivity {
                 invalidateOptionsMenu();
             }
         }
-
-
     }
 }

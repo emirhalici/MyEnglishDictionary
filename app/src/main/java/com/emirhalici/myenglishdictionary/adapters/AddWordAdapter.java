@@ -34,8 +34,6 @@ public class AddWordAdapter extends RecyclerView.Adapter<AddWordAdapter.eViewHol
         public TextView tv_word;
         public TextView tv_definition;
 
-
-
         public eViewHolder(@NonNull View itemView) {
             super(itemView);
             tv_type = (TextView) itemView.findViewById(R.id.tv_type);
@@ -69,22 +67,16 @@ public class AddWordAdapter extends RecyclerView.Adapter<AddWordAdapter.eViewHol
 
                         }
                     });
-
                     dialogBuilder.show();
-
                 }
             });
         }
-
     }
 
     public AddWordAdapter(ArrayList<WordModel> exampleList, Context context) {
         mWordList = exampleList;
         this.context = context;
     }
-
-
-
 
     @NonNull
     @Override
@@ -100,17 +92,12 @@ public class AddWordAdapter extends RecyclerView.Adapter<AddWordAdapter.eViewHol
         holder.tv_definition.setText(currentItem.getDefinition());
         holder.tv_type.setText(currentItem.getType());
         //holder.tv_word.setText(currentItem.getWord());
-
-
     }
 
     @Override
     public int getItemCount() {
         return mWordList.size();
     }
-
-
-
 
 }
 

@@ -12,6 +12,7 @@ import java.net.URL;
 import java.util.Scanner;
 
 public class ApiHelper {
+
     private static String getResponseFromHttpUrl(URL url) throws IOException {
 
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
