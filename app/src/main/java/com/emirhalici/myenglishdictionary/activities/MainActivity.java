@@ -1,5 +1,9 @@
 package com.emirhalici.myenglishdictionary.activities;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Environment;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,7 +38,11 @@ import com.emirhalici.myenglishdictionary.fragments.QuizEndFragment;
 import com.emirhalici.myenglishdictionary.utils.DatabaseHelper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.*;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -266,9 +274,56 @@ public class MainActivity extends AppCompatActivity {
             case R.id.type_desc:
                 openHomeFragment("type_desc");
                 return true;
+            case R.id.export:
+                exportDictionary();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    // https://developer.android.com/guide/topics/providers/document-provider
+    public void exportDictionary() {
+        Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("*/*"); //needed to not make it crash
+        startActivityForResult(intent, 1);
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // create file and write the dictionary to it.
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+            Uri uri = data.getData();
+            try {
+                OutputStream output = getApplicationContext().getContentResolver().openOutputStream(uri);
+                DatabaseHelper databaseHelper = new DatabaseHelper(getApplicationContext());
+                ArrayList<WordModel> wordModels = databaseHelper.getEveryWord();
+                JSONObject object = fromArrayList(wordModels);
+                output.write(object.getJSONArray("result").toString().getBytes());
+                output.flush();
+                output.close();
+                Toast.makeText(getApplicationContext(), "Dictionary saved successfully", Toast.LENGTH_SHORT).show();
+            } catch (IOException | JSONException e) {
+                Toast.makeText(getApplicationContext(), "Error while saving.", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    public JSONObject fromArrayList(ArrayList<WordModel> arrayList) {
+        JSONObject object = new JSONObject();
+        JSONArray jsonArray = new JSONArray();
+        for (int i=0; i < arrayList.size(); i++) {
+            jsonArray.put(arrayList.get(i).toJSONObject());
+        }
+        try {
+            object.put("result", jsonArray);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return object;
     }
 
     public void openHomeFragment(String sortType) {

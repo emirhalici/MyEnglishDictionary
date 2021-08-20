@@ -59,7 +59,10 @@
 
         </menu>
     </item>
-
+    <item
+            android:title="Export Dictionary"
+            android:id="@+id/export"
+            />
 
 
 </menu>

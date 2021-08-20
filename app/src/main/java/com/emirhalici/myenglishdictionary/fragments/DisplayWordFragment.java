@@ -83,12 +83,7 @@ public class DisplayWordFragment extends Fragment {
 
         FloatingActionButton fab_edit = v.findViewById(R.id.fab_edit);
 
-        fab_edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container, AddMFragment.newInstance(id)).addToBackStack(null).commit();
-            }
-        });
+        fab_edit.setOnClickListener(v1 -> getFragmentManager().beginTransaction().replace(R.id.fragment_container, AddMFragment.newInstance(id)).addToBackStack(null).commit());
 
         return v;
     }

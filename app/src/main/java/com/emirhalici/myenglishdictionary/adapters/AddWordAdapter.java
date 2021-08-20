@@ -27,7 +27,6 @@ public class AddWordAdapter extends RecyclerView.Adapter<AddWordAdapter.eViewHol
     public static ArrayList<WordModel> mWordList;
     public static Context context;
 
-
     public static class eViewHolder extends RecyclerView.ViewHolder {
 
         public TextView tv_type;

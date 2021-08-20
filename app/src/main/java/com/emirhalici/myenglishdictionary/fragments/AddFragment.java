@@ -46,13 +46,10 @@ public class AddFragment extends Fragment {
         tf_word = view.findViewById(R.id.tf_word);
         mRecyclerView = view.findViewById(R.id.rv);
 
-        btn_manual.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
-                //getFragmentManager().beginTransaction().replace(R.id.fragment_container, new AddMFragment()).commit();
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container, AddMFragment.newInstance(-1)).addToBackStack(null).commit();
-            }
+        btn_manual.setOnClickListener(v -> {
+            // getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
+            //getFragmentManager().beginTransaction().replace(R.id.fragment_container, new AddMFragment()).commit();
+            getFragmentManager().beginTransaction().replace(R.id.fragment_container, AddMFragment.newInstance(-1)).addToBackStack(null).commit();
         });
 
         btn_search.setOnClickListener(new View.OnClickListener() {
@@ -103,7 +100,6 @@ public class AddFragment extends Fragment {
                             // when it's null
 
                             getActivity().runOnUiThread(new Runnable() {
-
                                 @Override
                                 public void run() {
                                     // Stuff that updates the UI

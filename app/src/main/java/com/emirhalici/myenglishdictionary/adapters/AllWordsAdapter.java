@@ -125,22 +125,16 @@ public class  AllWordsAdapter extends RecyclerView.Adapter<AllWordsAdapter.eView
                     }
                 });
 
-                itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        AppCompatActivity activity = (AppCompatActivity) context;
-                        WordModel wordModel = mWordList.get(getAdapterPosition());
-                        String word = wordModel.getWord();
-                        String definition = wordModel.getDefinition();
-                        String type = wordModel.getType();
-                        String example = wordModel.getExample();
-                        activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, DisplayWordFragment.newInstance(wordModel.getId(),word, type, example, definition)).addToBackStack(null).commit();
-                    }
+                itemView.setOnClickListener(v -> {
+                    AppCompatActivity activity = (AppCompatActivity) context;
+                    WordModel wordModel = mWordList.get(getAdapterPosition());
+                    String word = wordModel.getWord();
+                    String definition = wordModel.getDefinition();
+                    String type = wordModel.getType();
+                    String example = wordModel.getExample();
+                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, DisplayWordFragment.newInstance(wordModel.getId(),word, type, example, definition)).addToBackStack(null).commit();
                 });
-
             }
-
-
 
         }
     }
