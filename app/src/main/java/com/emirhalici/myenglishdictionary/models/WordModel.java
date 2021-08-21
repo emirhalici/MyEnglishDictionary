@@ -20,6 +20,14 @@ public class WordModel {
         this.example = example;
     }
 
+    public WordModel(JSONObject wordObject) throws JSONException {
+        this.id = wordObject.getInt("id");
+        this.word = wordObject.getString("word");
+        this.type = wordObject.getString("type");
+        this.definition = wordObject.getString("definition");
+        this.example = wordObject.getString("example");
+    }
+
     @Override
     public String toString() {
         return "WordModel{" +

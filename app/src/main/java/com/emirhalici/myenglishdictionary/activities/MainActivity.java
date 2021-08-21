@@ -3,13 +3,10 @@ package com.emirhalici.myenglishdictionary.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Environment;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import android.app.SearchManager;
 import android.content.Context;
@@ -17,7 +14,6 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
@@ -274,8 +270,11 @@ public class MainActivity extends AppCompatActivity {
             case R.id.type_desc:
                 openHomeFragment("type_desc");
                 return true;
-            case R.id.export:
+            case R.id.exportdict:
                 exportDictionary();
+                return true;
+            case R.id.importdict:
+                importDictionary();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -288,7 +287,13 @@ public class MainActivity extends AppCompatActivity {
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         intent.setType("*/*"); //needed to not make it crash
         startActivityForResult(intent, 1);
+    }
 
+    public void importDictionary() {
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("*/*"); //needed to not make it crash
+        startActivityForResult(intent, 2);
     }
 
     @Override
@@ -309,6 +314,27 @@ public class MainActivity extends AppCompatActivity {
             } catch (IOException | JSONException e) {
                 Toast.makeText(getApplicationContext(), "Error while saving.", Toast.LENGTH_SHORT).show();
             }
+        } if (requestCode == 2 && resultCode == Activity.RESULT_OK) {
+            Uri uri = data.getData();
+            OutputStream output = null;
+            try {
+                BufferedReader br = new BufferedReader(new InputStreamReader(getContentResolver().openInputStream(uri)));
+                String line = br.readLine();
+                JSONArray jsonArray = new JSONArray(line);
+                ArrayList<WordModel> list = new ArrayList<WordModel>();
+                for(int i = 0 ; i < jsonArray.length() ; i++){
+                    //list.add(jsonArray.getJSONObject(i).getString("interestKey"));
+                    JSONObject obj = jsonArray.getJSONObject(i);
+                    DatabaseHelper databaseHelper = new DatabaseHelper(getApplicationContext());
+                    databaseHelper.addOne(new WordModel(obj));
+                }
+                Toast.makeText(this, "Dictionary imported successfully.", Toast.LENGTH_SHORT).show();
+                finish();
+                startActivity(getIntent());
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
+            }
+
         }
     }
 

@@ -61,8 +61,11 @@
     </item>
     <item
             android:title="Export Dictionary"
-            android:id="@+id/export"
+            android:id="@+id/exportdict"
             />
+    <item
+            android:title="Import Dictionary"
+            android:id="@+id/importdict"/>
 
 
 </menu>
