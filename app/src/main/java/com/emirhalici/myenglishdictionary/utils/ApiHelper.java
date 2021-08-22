@@ -36,7 +36,6 @@ public class ApiHelper {
         }
     }
 
-
     public static JSONObject searchWord(String word) {
         URL url = null;
         JSONObject json = null;
@@ -49,7 +48,6 @@ public class ApiHelper {
         try {
             String response = getResponseFromHttpUrl(url);
             json = new JSONObject(response);
-            //definitions = json.getJSONArray("definitions");
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }

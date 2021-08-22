@@ -8,6 +8,7 @@ import com.emirhalici.myenglishdictionary.models.WordModel;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Objects;
 import java.util.Random;
 
 public class QuizHelper {
@@ -36,7 +37,6 @@ public class QuizHelper {
         for (WordModel mainWord: allWordsShuffled.subList(0,allWordsShuffled.size()-optionSize-1)
              ) {
             ArrayList<String> options = new ArrayList<>();
-            //String question=mainWord.getWord(), answer=mainWord.getDefinition();
             String question = isAnswerDefinition ? mainWord.getWord() : mainWord.getDefinition();
             String answer = isAnswerDefinition ? mainWord.getDefinition() : mainWord.getWord();
             int id = mainWord.getId();
@@ -48,7 +48,7 @@ public class QuizHelper {
                     randomIndex = random.nextInt(allWords.size());
                     wordModel = allWords.get(randomIndex);
                     option = isAnswerDefinition ? wordModel.getDefinition() : wordModel.getWord();
-                } while (wordModel.getWord()==answer || options.contains(option));
+                } while (Objects.equals(wordModel.getWord(), answer) || options.contains(option));
                 options.add(option);
             }
             Collections.shuffle(options);

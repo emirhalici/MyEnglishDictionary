@@ -30,6 +30,7 @@ public final class QuizModel {
         return id;
     }
 
+    // no idea why I did it like this
     @Override
     public String toString() {
         //return "QuizModel{" +

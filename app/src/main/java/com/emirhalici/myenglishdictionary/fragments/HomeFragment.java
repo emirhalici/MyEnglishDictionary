@@ -21,6 +21,7 @@ import com.emirhalici.myenglishdictionary.R;
 import com.emirhalici.myenglishdictionary.models.WordModel;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class HomeFragment extends Fragment {
     public String sortType;
@@ -52,7 +53,6 @@ public class HomeFragment extends Fragment {
             else {
                 sortType = PreferenceManager.getDefaultSharedPreferences(getContext()).getString("sortType","word_asc");
             }
-
         } catch (NullPointerException e) {
             sortType = PreferenceManager.getDefaultSharedPreferences(getContext()).getString("sortType","word_asc");
         }
@@ -66,26 +66,22 @@ public class HomeFragment extends Fragment {
                 }
             } catch (NullPointerException e) {Log.e("HomeFragment",sortType + " typefilter nullpointerexception");}
         }
-
         MainActivity activity = (MainActivity) getActivity();
 
-        if (sortType == "date_desc") {
-            //
-            // changing it to blank perimeter
-            //
-
+        if (Objects.equals(sortType, "date_desc")) {
             wordList = databaseHelper.sortByDate();
             //Collections.reverse(wordList);
-        } else if (sortType == "word_asc") {
+        } else if (Objects.equals(sortType, "word_asc")) {
             wordList = databaseHelper.sortByWordName(wordList);
-        } else if (sortType == "word_desc") {
+        } else if (Objects.equals(sortType, "word_desc")) {
             wordList = databaseHelper.sortByWordNameD(wordList);
-        } else if (sortType == "type_asc") {
+        } else if (Objects.equals(sortType, "type_asc")) {
             wordList = databaseHelper.sortByWordType(wordList);
-        } else if (sortType == "type_desc") {
+        } else if (Objects.equals(sortType, "type_desc")) {
             wordList = databaseHelper.sortByWordTypeD(wordList);
         }
 
+        assert activity != null;
         if (activity.finalWordList!=null && !activity.finalWordList.isEmpty() && activity.finalWordList!=databaseHelper.getEveryWord() && activity.finalWordList.size()!=databaseHelper.getEveryWord().size()) {
             activity.applyQueryTextChange();
             wordList = activity.finalWordList;

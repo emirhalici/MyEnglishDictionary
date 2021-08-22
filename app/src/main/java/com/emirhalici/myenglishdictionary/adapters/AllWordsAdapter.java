@@ -49,7 +49,6 @@ public class  AllWordsAdapter extends RecyclerView.Adapter<AllWordsAdapter.eView
         public TextView tv_definition;
         public TextView tv_example;
 
-
         public eViewHolder(@NonNull View itemView) {
             super(itemView);
             tv_type = (TextView) itemView.findViewById(R.id.tv_type);

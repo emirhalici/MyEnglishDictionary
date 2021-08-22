@@ -53,13 +53,10 @@
     <string name="CorrectCount">Correct Count: %1$s</string>
     <string name="WrongCount">Wrong Count: %1$s</string>
     <string name="SuccessRate">Success Rate: %1$s/100</string>
-    <!--
-    This string is used for square devices and overridden by hello_world in
-    values-round/strings.xml for round devices.
-    -->
-    <string name="hello_world">Hello Square World!</string>
     <string name="endTest">End Test</string>
     <string name="start">Start</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="DictionaryExport">Dictionary saved successfully</string>
+    <string name="ErrorSaving">Error while saving.</string>
+    <string name="DictionaryImport">Dictionary imported successfully.</string>
 </resources>

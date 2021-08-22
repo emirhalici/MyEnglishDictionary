@@ -33,9 +33,7 @@ public class QuizFragment extends Fragment {
 
     void setCorrectButtonGreen(Button false_btn, Button btn1, Button btn2, Button btn3, Button btn4, String answer) {
         false_btn.setBackgroundColor(getResources().getColor(R.color.red, getContext().getTheme()));
-        //false_btn.setBackgroundColor(MaterialColors.getColor(btn4, R.attr.colorPrimary));
         false_btn.setTextColor(getResources().getColor(R.color.white, getContext().getTheme()));
-        //false_btn.setTextColor(MaterialColors.getColor(btn4, R.attr.colorOnPrimary));
 
         if (answer==btn1.getText()) {
             btn1.setBackgroundColor(getResources().getColor(R.color.green, getContext().getTheme()));
@@ -88,132 +86,117 @@ public class QuizFragment extends Fragment {
             }
         });
 
-        btn1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (QuizModelList[0].get(qCount -1).getOptions().get(0)== QuizModelList[0].get(qCount -1).getAnswer()) {
-                    btn1.setBackgroundColor(getResources().getColor(R.color.green, getContext().getTheme()));
-                    btn1.setTextColor(Color.WHITE);
-                    correctA++;
-                } else {
-                    setCorrectButtonGreen(btn1, btn1, btn2, btn3, btn4, answer);
-                    wrongWordList.add(QuizModelList[0].get(qCount-1).getId());
-                    wrongA++;
+        btn1.setOnClickListener(v1 -> {
+            if (QuizModelList[0].get(qCount -1).getOptions().get(0)== QuizModelList[0].get(qCount -1).getAnswer()) {
+                btn1.setBackgroundColor(getResources().getColor(R.color.green, getContext().getTheme()));
+                btn1.setTextColor(Color.WHITE);
+                correctA++;
+            } else {
+                setCorrectButtonGreen(btn1, btn1, btn2, btn3, btn4, answer);
+                wrongWordList.add(QuizModelList[0].get(qCount-1).getId());
+                wrongA++;
 
-                }
-                setButtonsClickable(btn1, btn2, btn3, btn4, false);
             }
+            setButtonsClickable(btn1, btn2, btn3, btn4, false);
         });
 
-        btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (QuizModelList[0].get(qCount -1).getOptions().get(1)== QuizModelList[0].get(qCount -1).getAnswer()) {
-                    btn2.setBackgroundColor(getResources().getColor(R.color.green, getContext().getTheme()));
-                    btn2.setTextColor(Color.WHITE);
-                    correctA++;
-                } else {
-                    setCorrectButtonGreen(btn2, btn1, btn2, btn3, btn4, answer);
-                    wrongWordList.add(QuizModelList[0].get(qCount-1).getId());
-                    wrongA++;
-                }
-                setButtonsClickable(btn1, btn2, btn3, btn4, false);
+        btn2.setOnClickListener(v12 -> {
+            if (QuizModelList[0].get(qCount -1).getOptions().get(1)== QuizModelList[0].get(qCount -1).getAnswer()) {
+                btn2.setBackgroundColor(getResources().getColor(R.color.green, getContext().getTheme()));
+                btn2.setTextColor(Color.WHITE);
+                correctA++;
+            } else {
+                setCorrectButtonGreen(btn2, btn1, btn2, btn3, btn4, answer);
+                wrongWordList.add(QuizModelList[0].get(qCount-1).getId());
+                wrongA++;
             }
+            setButtonsClickable(btn1, btn2, btn3, btn4, false);
         });
 
-        btn3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (QuizModelList[0].get(qCount -1).getOptions().get(2)== QuizModelList[0].get(qCount -1).getAnswer()) {
-                    btn3.setBackgroundColor(getResources().getColor(R.color.green, getContext().getTheme()));
-                    btn3.setTextColor(Color.WHITE);
-                    correctA++;
-                } else {
-                    setCorrectButtonGreen(btn3, btn1, btn2, btn3, btn4, answer);
-                    wrongWordList.add(QuizModelList[0].get(qCount-1).getId());
-                    wrongA++;
-                }
-                setButtonsClickable(btn1, btn2, btn3, btn4, false);
+        btn3.setOnClickListener(v13 -> {
+            if (QuizModelList[0].get(qCount -1).getOptions().get(2)== QuizModelList[0].get(qCount -1).getAnswer()) {
+                btn3.setBackgroundColor(getResources().getColor(R.color.green, getContext().getTheme()));
+                btn3.setTextColor(Color.WHITE);
+                correctA++;
+            } else {
+                setCorrectButtonGreen(btn3, btn1, btn2, btn3, btn4, answer);
+                wrongWordList.add(QuizModelList[0].get(qCount-1).getId());
+                wrongA++;
             }
+            setButtonsClickable(btn1, btn2, btn3, btn4, false);
         });
 
-        btn4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (QuizModelList[0].get(qCount -1).getOptions().get(3)== QuizModelList[0].get(qCount -1).getAnswer()) {
-                    btn4.setBackgroundColor(getResources().getColor(R.color.green, getContext().getTheme()));
-                    btn4.setTextColor(Color.WHITE);
-                    correctA++;
-                } else {
-                    setCorrectButtonGreen(btn4, btn1, btn2, btn3, btn4, answer);
-                    wrongWordList.add(QuizModelList[0].get(qCount-1).getId());
-                    wrongA++;
-                }
-                setButtonsClickable(btn1, btn2, btn3, btn4, false);
+        btn4.setOnClickListener(v14 -> {
+            if (QuizModelList[0].get(qCount -1).getOptions().get(3)== QuizModelList[0].get(qCount -1).getAnswer()) {
+                btn4.setBackgroundColor(getResources().getColor(R.color.green, getContext().getTheme()));
+                btn4.setTextColor(Color.WHITE);
+                correctA++;
+            } else {
+                setCorrectButtonGreen(btn4, btn1, btn2, btn3, btn4, answer);
+                wrongWordList.add(QuizModelList[0].get(qCount-1).getId());
+                wrongA++;
             }
+            setButtonsClickable(btn1, btn2, btn3, btn4, false);
         });
 
-        btn_next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setButtonsClickable(btn1, btn2, btn3, btn4, true);
-                btn1.setTextColor(MaterialColors.getColor(btn1, R.attr.colorPrimary));
-                btn1.setBackgroundColor(Color.TRANSPARENT);
-                btn2.setTextColor(MaterialColors.getColor(btn1, R.attr.colorPrimary));
-                btn2.setBackgroundColor(Color.TRANSPARENT);
-                btn3.setTextColor(MaterialColors.getColor(btn1, R.attr.colorPrimary));
-                btn3.setBackgroundColor(Color.TRANSPARENT);
-                btn4.setTextColor(MaterialColors.getColor(btn1, R.attr.colorPrimary));
-                btn4.setBackgroundColor(Color.TRANSPARENT);
-                if (checkBox.getVisibility()==View.VISIBLE) {
-                    boolean isChecked = checkBox.isChecked();
-                    QuizModelList[0] = quizHelper.getQuizModelList(isChecked, getContext());
-                    progressBar.setMax(QuizModelList[0].size()-1);
-                    progressBar.setProgress(qCount);
-                }
-
-                btn_end.setVisibility(View.VISIBLE);
-                btn1.setVisibility(View.VISIBLE);
-                btn2.setVisibility(View.VISIBLE);
-                btn3.setVisibility(View.VISIBLE);
-                btn4.setVisibility(View.VISIBLE);
-                textView.setVisibility(View.VISIBLE);
-                progressBar.setVisibility(View.VISIBLE);
-                checkBox.setVisibility(View.GONE);
-                btn_next.setText(getString(R.string.Next));
+        btn_next.setOnClickListener(v15 -> {
+            setButtonsClickable(btn1, btn2, btn3, btn4, true);
+            btn1.setTextColor(MaterialColors.getColor(btn1, R.attr.colorPrimary));
+            btn1.setBackgroundColor(Color.TRANSPARENT);
+            btn2.setTextColor(MaterialColors.getColor(btn1, R.attr.colorPrimary));
+            btn2.setBackgroundColor(Color.TRANSPARENT);
+            btn3.setTextColor(MaterialColors.getColor(btn1, R.attr.colorPrimary));
+            btn3.setBackgroundColor(Color.TRANSPARENT);
+            btn4.setTextColor(MaterialColors.getColor(btn1, R.attr.colorPrimary));
+            btn4.setBackgroundColor(Color.TRANSPARENT);
+            if (checkBox.getVisibility()==View.VISIBLE) {
+                boolean isChecked = checkBox.isChecked();
+                QuizModelList[0] = quizHelper.getQuizModelList(isChecked, getContext());
+                progressBar.setMax(QuizModelList[0].size()-1);
                 progressBar.setProgress(qCount);
-                if (qCount > QuizModelList[0].size()-2) {
-                    //c=0;
-                    btn_next.setVisibility(View.GONE);
-                    //
-                    // END OF TEST
-                    //
-                }
-                try {
-                    QuizModel object1 = QuizModelList[0].get(qCount);
-                    //textView.setText(c + "\n\n" + String.valueOf(object1.toString()));
-                    textView.setText(object1.getQuestion());
-                    //btn_next.setVisibility(View.GONE);
-                    options = object1.getOptions();
-                    answer = object1.getAnswer();
-                    btn1.setText(options.get(0));
-                    btn2.setText(options.get(1));
-                    btn3.setText(options.get(2));
-                    btn4.setText(options.get(3));
-                } catch (java.lang.IndexOutOfBoundsException e) {
-                    btn_next.setVisibility(View.GONE);
-                    textView.setVisibility(View.VISIBLE);
-                    textView.setText("Please add more words.");
-                    Log.e("QuizFragment", "IndexOutOfBoundsException");
-                    btn1.setVisibility(View.GONE);
-                    btn2.setVisibility(View.GONE);
-                    btn3.setVisibility(View.GONE);
-                    btn4.setVisibility(View.GONE);
-                    btn_end.setVisibility(View.GONE);
-                }
-
-                qCount++;
             }
+
+            btn_end.setVisibility(View.VISIBLE);
+            btn1.setVisibility(View.VISIBLE);
+            btn2.setVisibility(View.VISIBLE);
+            btn3.setVisibility(View.VISIBLE);
+            btn4.setVisibility(View.VISIBLE);
+            textView.setVisibility(View.VISIBLE);
+            progressBar.setVisibility(View.VISIBLE);
+            checkBox.setVisibility(View.GONE);
+            btn_next.setText(getString(R.string.Next));
+            progressBar.setProgress(qCount);
+            if (qCount > QuizModelList[0].size()-2) {
+                //c=0;
+                btn_next.setVisibility(View.GONE);
+                //
+                // END OF TEST
+                //
+            }
+            try {
+                QuizModel object1 = QuizModelList[0].get(qCount);
+                //textView.setText(c + "\n\n" + String.valueOf(object1.toString()));
+                textView.setText(object1.getQuestion());
+                //btn_next.setVisibility(View.GONE);
+                options = object1.getOptions();
+                answer = object1.getAnswer();
+                btn1.setText(options.get(0));
+                btn2.setText(options.get(1));
+                btn3.setText(options.get(2));
+                btn4.setText(options.get(3));
+            } catch (IndexOutOfBoundsException e) {
+                btn_next.setVisibility(View.GONE);
+                textView.setVisibility(View.VISIBLE);
+                textView.setText("Please add more words.");
+                Log.e("QuizFragment", "IndexOutOfBoundsException");
+                btn1.setVisibility(View.GONE);
+                btn2.setVisibility(View.GONE);
+                btn3.setVisibility(View.GONE);
+                btn4.setVisibility(View.GONE);
+                btn_end.setVisibility(View.GONE);
+            }
+
+            qCount++;
         });
 
         return v;

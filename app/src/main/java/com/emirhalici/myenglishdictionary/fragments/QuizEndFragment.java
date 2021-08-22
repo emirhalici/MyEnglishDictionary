@@ -21,11 +21,6 @@ import com.emirhalici.myenglishdictionary.adapters.AllWordsAdapter;
 
 import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link QuizEndFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class QuizEndFragment extends Fragment {
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -108,8 +103,7 @@ public class QuizEndFragment extends Fragment {
         DatabaseHelper databaseHelper = new DatabaseHelper(getContext());
         ArrayList<WordModel> wordList = new ArrayList<>();
 
-        for (int wordId: wordIdList
-             ) {
+        for (int wordId: wordIdList) {
             WordModel wordModel = databaseHelper.getOne(wordId);
             wordList.add(wordModel);
         }

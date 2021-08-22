@@ -49,22 +49,14 @@ public class AddWordAdapter extends RecyclerView.Adapter<AddWordAdapter.eViewHol
                     String alertMessage = context.getResources().getString(R.string.AddWordAlertDialogMessage, word);
                     dialogBuilder.setMessage(alertMessage);
 
-                    dialogBuilder.setPositiveButton(context.getResources().getString(R.string.Yes), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            DatabaseHelper databaseHelper = new DatabaseHelper(context);
-                            databaseHelper.addOne(mWordList.get(getAdapterPosition()));
-                            Toast.makeText(context, context.getResources().getString(R.string.AddWordSuccess), Toast.LENGTH_SHORT).show();
-                            Activity activity = (Activity) context;
-                            //((Activity) context).getFragmentManager().beginTransaction().replace(R.id.fragment_container, new EditFragment()).commit();
-                            //getFragmentManager().beginTransaction().replace(R.id.fragment_container, new EditFragment()).commit();
-                        }
+                    dialogBuilder.setPositiveButton(context.getResources().getString(R.string.Yes), (dialog, which) -> {
+                        DatabaseHelper databaseHelper = new DatabaseHelper(context);
+                        databaseHelper.addOne(mWordList.get(getAdapterPosition()));
+                        Toast.makeText(context, context.getResources().getString(R.string.AddWordSuccess), Toast.LENGTH_SHORT).show();
                     });
-                    dialogBuilder.setNegativeButton(context.getResources().getString(R.string.No), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
 
-                        }
+                    dialogBuilder.setNegativeButton(context.getResources().getString(R.string.No), (dialog, which) -> {
+
                     });
                     dialogBuilder.show();
                 }
@@ -90,7 +82,6 @@ public class AddWordAdapter extends RecyclerView.Adapter<AddWordAdapter.eViewHol
         WordModel currentItem = mWordList.get(position);
         holder.tv_definition.setText(currentItem.getDefinition());
         holder.tv_type.setText(currentItem.getType());
-        //holder.tv_word.setText(currentItem.getWord());
     }
 
     @Override

@@ -85,9 +85,7 @@ public class MainActivity extends AppCompatActivity {
                     getSupportFragmentManager().popBackStack("aboutFragment",0);
                 case "quizEndFragment":
                     getSupportFragmentManager().popBackStack("quizEndFragment", 0);
-                    //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new QuizEndFragment()).addToBackStack("quizEndFragment").commit();
             }
-
         } else {
             openHomeFragment(sortType);
         }
@@ -98,6 +96,8 @@ public class MainActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.top_navigation, menu);
 
+        // if android version is not supporting these features,
+        // set them not visible
         if ((Build.VERSION.SDK_INT < Build.VERSION_CODES.N)) {
             menu.findItem(R.id.word_asc).setVisible(false);
             menu.findItem(R.id.word_desc).setVisible(false);
@@ -223,10 +223,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
-                builder.setNeutralButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
+                builder.setNeutralButton(getString(R.string.cancel), (dialog, which) -> {
                 });
                 builder.create().show();
                 return true;
@@ -310,39 +307,38 @@ public class MainActivity extends AppCompatActivity {
                 output.write(object.getJSONArray("result").toString().getBytes());
                 output.flush();
                 output.close();
-                Toast.makeText(getApplicationContext(), "Dictionary saved successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getString(R.string.DictionaryExport), Toast.LENGTH_SHORT).show();
             } catch (IOException | JSONException e) {
-                Toast.makeText(getApplicationContext(), "Error while saving.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getString(R.string.ErrorSaving), Toast.LENGTH_SHORT).show();
             }
-        } if (requestCode == 2 && resultCode == Activity.RESULT_OK) {
+        }
+        // open file, parse it and add data to dictionary
+        if (requestCode == 2 && resultCode == Activity.RESULT_OK) {
             Uri uri = data.getData();
-            OutputStream output = null;
             try {
                 BufferedReader br = new BufferedReader(new InputStreamReader(getContentResolver().openInputStream(uri)));
                 String line = br.readLine();
                 JSONArray jsonArray = new JSONArray(line);
-                ArrayList<WordModel> list = new ArrayList<WordModel>();
                 for(int i = 0 ; i < jsonArray.length() ; i++){
-                    //list.add(jsonArray.getJSONObject(i).getString("interestKey"));
                     JSONObject obj = jsonArray.getJSONObject(i);
                     DatabaseHelper databaseHelper = new DatabaseHelper(getApplicationContext());
                     databaseHelper.addOne(new WordModel(obj));
                 }
-                Toast.makeText(this, "Dictionary imported successfully.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.DictionaryImport), Toast.LENGTH_SHORT).show();
+                // just restart the same activity
                 finish();
                 startActivity(getIntent());
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
-
         }
     }
 
     public JSONObject fromArrayList(ArrayList<WordModel> arrayList) {
         JSONObject object = new JSONObject();
         JSONArray jsonArray = new JSONArray();
-        for (int i=0; i < arrayList.size(); i++) {
-            jsonArray.put(arrayList.get(i).toJSONObject());
+        for (WordModel wordModel : arrayList) {
+            jsonArray.put(wordModel.toJSONObject());
         }
         try {
             object.put("result", jsonArray);
@@ -365,35 +361,31 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // bottom navigation bar listener
-    private BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            Fragment selectedFragment = null;
-            switch (item.getItemId()) {
-                case R.id.nav_home:
-                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                    String sortType = sharedPreferences.getString("sortType","word_asc");
-                    selectedFragment = new HomeFragment();
-                    Bundle args = new Bundle();
-                    args.putString("sortType", sortType);
-                    selectedFragment.setArguments(args);
-                    invalidateOptionsMenu();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment, "homeFragment").addToBackStack("homeFragment").commit();
-                    break;
-                case R.id.nav_add:
-                    selectedFragment = new AddFragment();
-                    invalidateOptionsMenu();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).addToBackStack("addFragment").commit();
-                    break;
-                case R.id.nav_quiz:
-                    selectedFragment = new QuizFragment();
-                    invalidateOptionsMenu();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).addToBackStack("quizFragment").commit();
-                    break;
-            }
-            return true;
-
+    private BottomNavigationView.OnNavigationItemSelectedListener navListener = item -> {
+        Fragment selectedFragment = null;
+        switch (item.getItemId()) {
+            case R.id.nav_home:
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                String sortType = sharedPreferences.getString("sortType","word_asc");
+                selectedFragment = new HomeFragment();
+                Bundle args = new Bundle();
+                args.putString("sortType", sortType);
+                selectedFragment.setArguments(args);
+                invalidateOptionsMenu();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment, "homeFragment").addToBackStack("homeFragment").commit();
+                break;
+            case R.id.nav_add:
+                selectedFragment = new AddFragment();
+                invalidateOptionsMenu();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).addToBackStack("addFragment").commit();
+                break;
+            case R.id.nav_quiz:
+                selectedFragment = new QuizFragment();
+                invalidateOptionsMenu();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).addToBackStack("quizFragment").commit();
+                break;
         }
+        return true;
     };
 
     @Override
