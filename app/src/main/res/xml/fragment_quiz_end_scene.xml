@@ -29,7 +29,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             motion:layout_constraintEnd_toEndOf="parent"
-            motion:layout_editor_absoluteY="16dp"
             motion:layout_constraintStart_toStartOf="parent"
             motion:layout_constraintBottom_toTopOf="parent"
             android:layout_marginStart="16dp"

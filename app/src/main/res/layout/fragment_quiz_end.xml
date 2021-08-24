@@ -55,6 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
             android:fontFamily="@font/source_sans_pro_semibold"
             android:text="Success Rate: 50/100"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
