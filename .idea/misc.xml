@@ -3,8 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/layout-land/fragment_quiz_end.xml" value="0.2623456790123457" />
         <entry key="app/src/main/res/layout/compact_card.xml" value="0.5337620578778135" />
+        <entry key="app/src/main/res/layout/fragment_add.xml" value="0.5094685054739462" />
         <entry key="app/src/main/res/layout/fragment_display_word.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/fragment_quiz.xml" value="0.26721014492753625" />
+        <entry key="app/src/main/res/layout/fragment_quiz_end.xml" value="0.26721014492753625" />
       </map>
     </option>
   </component>

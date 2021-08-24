@@ -15,7 +15,7 @@
            <KeyAttribute
                motion:motionTarget="@+id/linearLayout4"
                motion:framePosition="40"
-               android:alpha="0.5" />
+               android:alpha="0.3" />
        </KeyFrameSet>
         <OnSwipe motion:touchAnchorId="@+id/rv_quizend" />
     </Transition>
@@ -27,12 +27,13 @@
         <Constraint
             android:id="@+id/linearLayout4"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="1dp"
             motion:layout_constraintEnd_toEndOf="parent"
             motion:layout_constraintStart_toStartOf="parent"
             motion:layout_constraintBottom_toTopOf="parent"
             android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp" />
+            android:layout_marginEnd="16dp"
+            motion:layout_constraintTop_toTopOf="parent" />
         <Constraint
             android:id="@+id/rv_quizend"
             motion:layout_constraintEnd_toEndOf="parent"
