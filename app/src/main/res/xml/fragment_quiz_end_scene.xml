@@ -27,10 +27,13 @@
         <Constraint
             android:id="@+id/linearLayout4"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginEnd="16dp"
+            android:layout_height="wrap_content"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_editor_absoluteY="16dp"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintBottom_toTopOf="parent"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp" />
+            android:layout_marginEnd="16dp" />
         <Constraint
             android:id="@+id/rv_quizend"
             motion:layout_constraintEnd_toEndOf="parent"
