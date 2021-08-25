@@ -129,7 +129,9 @@ public class AddMFragment extends Fragment {
                     boolean addBool = databaseHelper.addOne(myWord);
                     if (addBool) {
                         Toast.makeText(getContext(), getString(R.string.AddWordSuccess), Toast.LENGTH_SHORT).show();
-                        getFragmentManager().beginTransaction().replace(R.id.fragment_container, new AddFragment()).addToBackStack(null).commit();
+                        getFragmentManager().beginTransaction().
+                                setCustomAnimations(R.anim.slide_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out).
+                                replace(R.id.fragment_container, new AddFragment()).addToBackStack(null).commit();
                     } else {
                         Toast.makeText(getContext(), getString(R.string.AddWordFail), Toast.LENGTH_SHORT).show();
                     }
@@ -143,7 +145,9 @@ public class AddMFragment extends Fragment {
                     }
 
                     // new fragmewnt
-                    getFragmentManager().beginTransaction().replace(R.id.fragment_container, DisplayWordFragment.newInstance(wordId,word, type, example, definition)).addToBackStack(null).commit();
+                    getFragmentManager().beginTransaction().
+                            setCustomAnimations(R.anim.slide_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out).
+                            replace(R.id.fragment_container, DisplayWordFragment.newInstance(wordId,word, type, example, definition)).addToBackStack(null).commit();
 
                 }
 

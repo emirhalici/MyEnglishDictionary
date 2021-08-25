@@ -64,64 +64,64 @@ public class  AllWordsAdapter extends RecyclerView.Adapter<AllWordsAdapter.eView
             } else {
                 itemView.setLongClickable(true);
 
-                itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                itemView.setOnLongClickListener(v -> {
+                    MaterialAlertDialogBuilder dialogBuilderMain = new MaterialAlertDialogBuilder(context);
+                    String alertTitle = context.getResources().getString(R.string.AddWordAlertDialogTitleMain);
+                    dialogBuilderMain.setTitle(alertTitle);
+                    String alertMessage = context.getString(R.string.AddWordAlertDialogMessageMain, mWordList.get(getAdapterPosition()).getWord());
+                    dialogBuilderMain.setMessage(alertMessage);
+                    dialogBuilderMain.setPositiveButton(context.getString(R.string.AddWordAlertDialogEdit), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // on clicked edit
+                            AppCompatActivity activity = (AppCompatActivity) context;
+                            int wordid = mWordList.get(getAdapterPosition()).getId();
+                            activity.getSupportFragmentManager().beginTransaction().
+                                    setCustomAnimations(R.anim.slide_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out).
+                                    replace(R.id.fragment_container, AddMFragment.newInstance(wordid)).addToBackStack(null).commit();
 
-                    @Override
-                    public boolean onLongClick(View v) {
-                        MaterialAlertDialogBuilder dialogBuilderMain = new MaterialAlertDialogBuilder(context);
-                        String alertTitle = context.getResources().getString(R.string.AddWordAlertDialogTitleMain);
-                        dialogBuilderMain.setTitle(alertTitle);
-                        String alertMessage = context.getString(R.string.AddWordAlertDialogMessageMain, mWordList.get(getAdapterPosition()).getWord());
-                        dialogBuilderMain.setMessage(alertMessage);
-                        dialogBuilderMain.setPositiveButton(context.getString(R.string.AddWordAlertDialogEdit), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                // on clicked edit
-                                AppCompatActivity activity = (AppCompatActivity) context;
-                                int wordid = mWordList.get(getAdapterPosition()).getId();
-                                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, AddMFragment.newInstance(wordid)).addToBackStack(null).commit();
+                        }
+                    });
+                    dialogBuilderMain.setNegativeButton(context.getString(R.string.AddWordAlertDialogDelete), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // on clicked delete
+                            MaterialAlertDialogBuilder dialogBuilder = new MaterialAlertDialogBuilder(context);
+                            String alertTitleS = context.getResources().getString(R.string.AddWordAlertDialogTitle);
+                            dialogBuilder.setTitle(alertTitleS);
+                            String alertMessageS = context.getResources().getString(R.string.AddWordAlertDialogDeleteMessage, mWordList.get(getAdapterPosition()).getWord());
+                            dialogBuilder.setMessage(alertMessageS);
+                            dialogBuilder.setPositiveButton(context.getResources().getString(R.string.Yes), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    DatabaseHelper databaseHelper = new DatabaseHelper(context);
+                                    boolean response = databaseHelper.deleteOne(mWordList.get(getAdapterPosition()));
+                                    String toastString = (response ? context.getString(R.string.AddWordAlertDialogDeleteFail) : context.getString(R.string.AddWordAlertDialogDeleteSuccess));
+                                    Toast.makeText(context, toastString, Toast.LENGTH_SHORT).show();
+                                    AppCompatActivity activity = (AppCompatActivity) context;
+                                    activity.getSupportFragmentManager().beginTransaction().
+                                            setCustomAnimations(R.anim.slide_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out).
+                                            replace(R.id.fragment_container, new HomeFragment()).addToBackStack(null).commit();
 
-                            }
-                        });
-                        dialogBuilderMain.setNegativeButton(context.getString(R.string.AddWordAlertDialogDelete), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                // on clicked delete
-                                MaterialAlertDialogBuilder dialogBuilder = new MaterialAlertDialogBuilder(context);
-                                String alertTitleS = context.getResources().getString(R.string.AddWordAlertDialogTitle);
-                                dialogBuilder.setTitle(alertTitleS);
-                                String alertMessageS = context.getResources().getString(R.string.AddWordAlertDialogDeleteMessage, mWordList.get(getAdapterPosition()).getWord());
-                                dialogBuilder.setMessage(alertMessageS);
-                                dialogBuilder.setPositiveButton(context.getResources().getString(R.string.Yes), new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        DatabaseHelper databaseHelper = new DatabaseHelper(context);
-                                        boolean response = databaseHelper.deleteOne(mWordList.get(getAdapterPosition()));
-                                        String toastString = (response ? context.getString(R.string.AddWordAlertDialogDeleteFail) : context.getString(R.string.AddWordAlertDialogDeleteSuccess));
-                                        Toast.makeText(context, toastString, Toast.LENGTH_SHORT).show();
-                                        AppCompatActivity activity = (AppCompatActivity) context;
-                                        activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).addToBackStack(null).commit();
-
-                                    }});
-                                dialogBuilder.setNegativeButton(context.getResources().getString(R.string.No), new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        // code for the click no
-                                    }});
-                                dialogBuilder.show();
+                                }});
+                            dialogBuilder.setNegativeButton(context.getResources().getString(R.string.No), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // code for the click no
+                                }});
+                            dialogBuilder.show();
 
 
-                            }
-                        });
-                        dialogBuilderMain.setNeutralButton(context.getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                // on clicked cancel
-                            }
-                        });
-                        dialogBuilderMain.show();
-                        return true;
-                    }
+                        }
+                    });
+                    dialogBuilderMain.setNeutralButton(context.getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // on clicked cancel
+                        }
+                    });
+                    dialogBuilderMain.show();
+                    return true;
                 });
 
                 itemView.setOnClickListener(v -> {
@@ -131,7 +131,9 @@ public class  AllWordsAdapter extends RecyclerView.Adapter<AllWordsAdapter.eView
                     String definition = wordModel.getDefinition();
                     String type = wordModel.getType();
                     String example = wordModel.getExample();
-                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, DisplayWordFragment.newInstance(wordModel.getId(),word, type, example, definition)).addToBackStack(null).commit();
+                    activity.getSupportFragmentManager().beginTransaction().
+                            setCustomAnimations(R.anim.slide_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out).
+                            replace(R.id.fragment_container, DisplayWordFragment.newInstance(wordModel.getId(),word, type, example, definition)).addToBackStack(null).commit();
                 });
             }
 

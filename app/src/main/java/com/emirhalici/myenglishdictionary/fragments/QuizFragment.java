@@ -13,8 +13,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.motion.widget.MotionLayout;
 import androidx.fragment.app.Fragment;
 
+import com.emirhalici.myenglishdictionary.utils.ProgressBarAnimHelper;
 import com.emirhalici.myenglishdictionary.utils.QuizHelper;
 import com.emirhalici.myenglishdictionary.models.QuizModel;
 import com.emirhalici.myenglishdictionary.R;
@@ -24,30 +26,7 @@ import java.util.ArrayList;
 
 public class QuizFragment extends Fragment {
 
-    static void setButtonsClickable(Button btn_id1, Button btn_id2, Button btn_id3, Button btn_id4, boolean isClickable) {
-        btn_id1.setClickable(isClickable);
-        btn_id2.setClickable(isClickable);
-        btn_id3.setClickable(isClickable);
-        btn_id4.setClickable(isClickable);
-    }
 
-    void setCorrectButtonGreen(Button false_btn, Button btn1, Button btn2, Button btn3, Button btn4, String answer) {
-        false_btn.setBackgroundColor(getResources().getColor(R.color.red, getContext().getTheme()));
-        false_btn.setTextColor(getResources().getColor(R.color.white, getContext().getTheme()));
-
-        if (answer==btn1.getText()) {
-            btn1.setBackgroundColor(getResources().getColor(R.color.green, getContext().getTheme()));
-            btn1.setTextColor(Color.WHITE); }
-        else if (answer==btn2.getText()) {
-            btn2.setBackgroundColor(getResources().getColor(R.color.green, getContext().getTheme()));
-            btn2.setTextColor(Color.WHITE); }
-        else if (answer==btn3.getText()) {
-            btn3.setBackgroundColor(getResources().getColor(R.color.green, getContext().getTheme()));
-            btn3.setTextColor(Color.WHITE); }
-        else if (answer==btn4.getText()) {
-            btn4.setBackgroundColor(getResources().getColor(R.color.green, getContext().getTheme()));
-            btn4.setTextColor(Color.WHITE); }
-    }
 
     public int qCount, correctA, wrongA = 0;
     ArrayList<String> options;
@@ -77,13 +56,13 @@ public class QuizFragment extends Fragment {
         final ArrayList<QuizModel>[] QuizModelList = new ArrayList[]{null};
         ArrayList<Integer> wrongWordList = new ArrayList<Integer>();
 
-        btn_end.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // END OF TEST
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container, QuizEndFragment.newInstance(qCount, correctA, wrongA, wrongWordList), "quizEnd").addToBackStack("quizEnd").commit();
-                //
-            }
+        btn_end.setOnClickListener(v16 -> {
+            // END OF TEST
+            getFragmentManager().beginTransaction().
+                    setCustomAnimations(R.anim.slide_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out).
+                    replace(R.id.fragment_container, QuizEndFragment.newInstance(qCount, correctA, wrongA, wrongWordList), "quizEnd").
+                    addToBackStack("quizEnd").commit();
+            //
         });
 
         btn1.setOnClickListener(v1 -> {
@@ -150,22 +129,26 @@ public class QuizFragment extends Fragment {
             btn4.setTextColor(MaterialColors.getColor(btn1, R.attr.colorPrimary));
             btn4.setBackgroundColor(Color.TRANSPARENT);
             if (checkBox.getVisibility()==View.VISIBLE) {
+                //((MotionLayout)v.findViewById(R.id.quizMotionLayout)).transitionToEnd();
                 boolean isChecked = checkBox.isChecked();
+                checkBox.setVisibility(View.GONE);
                 QuizModelList[0] = quizHelper.getQuizModelList(isChecked, getContext());
-                progressBar.setMax(QuizModelList[0].size()-1);
-                progressBar.setProgress(qCount);
+                progressBar.setMax((QuizModelList[0].size()-1)*100);
+                progressBar.setProgress(qCount*100);
+                btn_end.setVisibility(View.VISIBLE);
+                btn1.setVisibility(View.VISIBLE);
+                btn2.setVisibility(View.VISIBLE);
+                btn3.setVisibility(View.VISIBLE);
+                btn4.setVisibility(View.VISIBLE);
+                textView.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.VISIBLE);
+                btn_next.setText(getString(R.string.Next));
             }
+            ProgressBarAnimHelper anim = new ProgressBarAnimHelper(progressBar, progressBar.getProgress(), qCount*100);
+            anim.setDuration(100);
+            progressBar.startAnimation(anim);
+            //progressBar.setProgress(qCount);
 
-            btn_end.setVisibility(View.VISIBLE);
-            btn1.setVisibility(View.VISIBLE);
-            btn2.setVisibility(View.VISIBLE);
-            btn3.setVisibility(View.VISIBLE);
-            btn4.setVisibility(View.VISIBLE);
-            textView.setVisibility(View.VISIBLE);
-            progressBar.setVisibility(View.VISIBLE);
-            checkBox.setVisibility(View.GONE);
-            btn_next.setText(getString(R.string.Next));
-            progressBar.setProgress(qCount);
             if (qCount > QuizModelList[0].size()-2) {
                 //c=0;
                 btn_next.setVisibility(View.GONE);
@@ -195,7 +178,6 @@ public class QuizFragment extends Fragment {
                 btn4.setVisibility(View.GONE);
                 btn_end.setVisibility(View.GONE);
             }
-
             qCount++;
         });
 
@@ -203,6 +185,29 @@ public class QuizFragment extends Fragment {
     }
 
 
+    static void setButtonsClickable(Button btn_id1, Button btn_id2, Button btn_id3, Button btn_id4, boolean isClickable) {
+        btn_id1.setClickable(isClickable);
+        btn_id2.setClickable(isClickable);
+        btn_id3.setClickable(isClickable);
+        btn_id4.setClickable(isClickable);
+    }
 
+    void setCorrectButtonGreen(Button false_btn, Button btn1, Button btn2, Button btn3, Button btn4, String answer) {
+        false_btn.setBackgroundColor(getResources().getColor(R.color.red, getContext().getTheme()));
+        false_btn.setTextColor(getResources().getColor(R.color.white, getContext().getTheme()));
+
+        if (answer==btn1.getText()) {
+            btn1.setBackgroundColor(getResources().getColor(R.color.green, getContext().getTheme()));
+            btn1.setTextColor(Color.WHITE); }
+        else if (answer==btn2.getText()) {
+            btn2.setBackgroundColor(getResources().getColor(R.color.green, getContext().getTheme()));
+            btn2.setTextColor(Color.WHITE); }
+        else if (answer==btn3.getText()) {
+            btn3.setBackgroundColor(getResources().getColor(R.color.green, getContext().getTheme()));
+            btn3.setTextColor(Color.WHITE); }
+        else if (answer==btn4.getText()) {
+            btn4.setBackgroundColor(getResources().getColor(R.color.green, getContext().getTheme()));
+            btn4.setTextColor(Color.WHITE); }
+    }
 
 }

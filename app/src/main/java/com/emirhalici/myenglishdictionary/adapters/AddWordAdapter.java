@@ -38,28 +38,25 @@ public class AddWordAdapter extends RecyclerView.Adapter<AddWordAdapter.eViewHol
             tv_type = (TextView) itemView.findViewById(R.id.tv_type);
             tv_word = (TextView) itemView.findViewById(R.id.tv_word);
             tv_definition = (TextView) itemView.findViewById(R.id.tv_definition);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    MaterialAlertDialogBuilder dialogBuilder = new MaterialAlertDialogBuilder(context);
-                    String alertTitle = context.getResources().getString(R.string.AddWordAlertDialogTitle);
-                    dialogBuilder.setTitle(alertTitle);
+            itemView.setOnClickListener(v -> {
+                MaterialAlertDialogBuilder dialogBuilder = new MaterialAlertDialogBuilder(context);
+                String alertTitle = context.getResources().getString(R.string.AddWordAlertDialogTitle);
+                dialogBuilder.setTitle(alertTitle);
 
-                    String word = mWordList.get(getAdapterPosition()).getWord();
-                    String alertMessage = context.getResources().getString(R.string.AddWordAlertDialogMessage, word);
-                    dialogBuilder.setMessage(alertMessage);
+                String word = mWordList.get(getAdapterPosition()).getWord();
+                String alertMessage = context.getResources().getString(R.string.AddWordAlertDialogMessage, word);
+                dialogBuilder.setMessage(alertMessage);
 
-                    dialogBuilder.setPositiveButton(context.getResources().getString(R.string.Yes), (dialog, which) -> {
-                        DatabaseHelper databaseHelper = new DatabaseHelper(context);
-                        databaseHelper.addOne(mWordList.get(getAdapterPosition()));
-                        Toast.makeText(context, context.getResources().getString(R.string.AddWordSuccess), Toast.LENGTH_SHORT).show();
-                    });
+                dialogBuilder.setPositiveButton(context.getResources().getString(R.string.Yes), (dialog, which) -> {
+                    DatabaseHelper databaseHelper = new DatabaseHelper(context);
+                    databaseHelper.addOne(mWordList.get(getAdapterPosition()));
+                    Toast.makeText(context, context.getResources().getString(R.string.AddWordSuccess), Toast.LENGTH_SHORT).show();
+                });
 
-                    dialogBuilder.setNegativeButton(context.getResources().getString(R.string.No), (dialog, which) -> {
+                dialogBuilder.setNegativeButton(context.getResources().getString(R.string.No), (dialog, which) -> {
 
-                    });
-                    dialogBuilder.show();
-                }
+                });
+                dialogBuilder.show();
             });
         }
     }

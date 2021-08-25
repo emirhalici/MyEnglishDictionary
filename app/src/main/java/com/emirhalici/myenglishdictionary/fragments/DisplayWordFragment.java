@@ -83,7 +83,9 @@ public class DisplayWordFragment extends Fragment {
 
         FloatingActionButton fab_edit = v.findViewById(R.id.fab_edit);
 
-        fab_edit.setOnClickListener(v1 -> getFragmentManager().beginTransaction().replace(R.id.fragment_container, AddMFragment.newInstance(id)).addToBackStack(null).commit());
+        fab_edit.setOnClickListener(v1 -> getFragmentManager().beginTransaction().
+                setCustomAnimations(R.anim.slide_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out).
+                replace(R.id.fragment_container, AddMFragment.newInstance(id)).addToBackStack(null).commit());
 
         return v;
     }

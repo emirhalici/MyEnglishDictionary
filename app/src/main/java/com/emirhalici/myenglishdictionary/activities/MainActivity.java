@@ -112,7 +112,9 @@ public class MainActivity extends AppCompatActivity {
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new HomeFragment(),"homeFragment").addToBackStack("homeFragment").commit();
+                getSupportFragmentManager().beginTransaction().
+                        setCustomAnimations(R.anim.slide_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out).
+                        replace(R.id.fragment_container,new HomeFragment(),"homeFragment").addToBackStack("homeFragment").commit();
                 return false;
             }
             @Override
@@ -191,36 +193,30 @@ public class MainActivity extends AppCompatActivity {
                 MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this);
                 String alertTitle = "Type Filter";
                 builder.setTitle(alertTitle);
-                builder.setMultiChoiceItems(typeListArray, typeListChecked, new DialogInterface.OnMultiChoiceClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                        typeListChecked[which] = isChecked;
+                builder.setMultiChoiceItems(typeListArray, typeListChecked, (dialog, which, isChecked) -> typeListChecked[which] = isChecked);
+                builder.setPositiveButton(getString(R.string.ok), (dialog, which) -> {
+                    finalTypeList.clear();
+                    int c=0;
+                    for (int i=0; i<typeListChecked.length; i++) {
+                        if (typeListChecked[i]) {
+                            c++;
+                            finalTypeList.add(typeListArray[i]);
+                        }
                     }
-                });
-                builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        finalTypeList.clear();
-                        int c=0;
-                        for (int i=0; i<typeListChecked.length; i++) {
-                            if (typeListChecked[i]) {
-                                c++;
-                                finalTypeList.add(typeListArray[i]);
-                            }
-                        }
-                        if (c==0) {
-                            Toast.makeText(MainActivity.this, getString(R.string.tickbox), Toast.LENGTH_SHORT).show();
-                        }
-                        else {
-                            Fragment fragment = new HomeFragment();
-                            Bundle args = new Bundle();
-                            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                            String sortType = sharedPreferences.getString("sortType", "date_asc");
-                            args.putString("sortType", sortType);
-                            args.putStringArrayList("typeFilter", finalTypeList);
-                            fragment.setArguments(args);
-                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment,"homeFragment").addToBackStack("homeFragment").commit();
-                        }
+                    if (c==0) {
+                        Toast.makeText(MainActivity.this, getString(R.string.tickbox), Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Fragment fragment = new HomeFragment();
+                        Bundle args = new Bundle();
+                        SharedPreferences sharedPreferences1 = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                        String sortType = sharedPreferences1.getString("sortType", "date_asc");
+                        args.putString("sortType", sortType);
+                        args.putStringArrayList("typeFilter", finalTypeList);
+                        fragment.setArguments(args);
+                        getSupportFragmentManager().beginTransaction().
+                                setCustomAnimations(R.anim.slide_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out).
+                                replace(R.id.fragment_container, fragment,"homeFragment").addToBackStack("homeFragment").commit();
                     }
                 });
                 builder.setNeutralButton(getString(R.string.cancel), (dialog, which) -> {
@@ -229,7 +225,9 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.aboutme:
                 invalidateOptionsMenu();
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AboutFragment(), "aboutFragment").addToBackStack("aboutFragment").commit();
+                getSupportFragmentManager().beginTransaction().
+                        setCustomAnimations(R.anim.slide_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out).
+                        replace(R.id.fragment_container, new AboutFragment(), "aboutFragment").addToBackStack("aboutFragment").commit();
                 return true;
             case R.id.sort:
                 return true;
@@ -357,7 +355,9 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("sortType", sortType);
         editor.apply();
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment,"homeFragment").addToBackStack("homeFragment").commit();
+        getSupportFragmentManager().beginTransaction().
+                setCustomAnimations(R.anim.slide_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out).
+                replace(R.id.fragment_container,fragment,"homeFragment").addToBackStack("homeFragment").commit();
     }
 
     // bottom navigation bar listener
@@ -372,17 +372,23 @@ public class MainActivity extends AppCompatActivity {
                 args.putString("sortType", sortType);
                 selectedFragment.setArguments(args);
                 invalidateOptionsMenu();
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment, "homeFragment").addToBackStack("homeFragment").commit();
+                getSupportFragmentManager().beginTransaction().
+                        setCustomAnimations(R.anim.slide_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out).
+                        replace(R.id.fragment_container, selectedFragment, "homeFragment").addToBackStack("homeFragment").commit();
                 break;
             case R.id.nav_add:
                 selectedFragment = new AddFragment();
                 invalidateOptionsMenu();
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).addToBackStack("addFragment").commit();
+                getSupportFragmentManager().beginTransaction().
+                        setCustomAnimations(R.anim.slide_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out).
+                        replace(R.id.fragment_container, selectedFragment).addToBackStack("addFragment").commit();
                 break;
             case R.id.nav_quiz:
                 selectedFragment = new QuizFragment();
                 invalidateOptionsMenu();
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).addToBackStack("quizFragment").commit();
+                getSupportFragmentManager().beginTransaction().
+                        setCustomAnimations(R.anim.slide_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out).
+                        replace(R.id.fragment_container, selectedFragment).addToBackStack("quizFragment").commit();
                 break;
         }
         return true;
