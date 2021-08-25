@@ -4,13 +4,14 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.SearchManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -43,7 +44,6 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private long backPressedTime;
-    DatabaseHelper databaseHelper;
     public ArrayList<String> finalTypeList = new ArrayList<>();
     public String searchQuery;
     public ArrayList<WordModel> finalWordList = new ArrayList<>();
@@ -362,9 +362,17 @@ public class MainActivity extends AppCompatActivity {
 
     // bottom navigation bar listener
     private BottomNavigationView.OnNavigationItemSelectedListener navListener = item -> {
+        Fragment activeFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
         Fragment selectedFragment = null;
         switch (item.getItemId()) {
             case R.id.nav_home:
+                if (activeFragment instanceof HomeFragment) {
+                    RecyclerView rv = activeFragment.getView().findViewById(R.id.rv_home);
+                    if (rv != null) {
+                        rv.smoothScrollToPosition(0);
+                        return true;
+                    }
+                }
                 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 String sortType = sharedPreferences.getString("sortType","word_asc");
                 selectedFragment = new HomeFragment();
@@ -374,21 +382,30 @@ public class MainActivity extends AppCompatActivity {
                 invalidateOptionsMenu();
                 getSupportFragmentManager().beginTransaction().
                         setCustomAnimations(R.anim.slide_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out).
-                        replace(R.id.fragment_container, selectedFragment, "homeFragment").addToBackStack("homeFragment").commit();
+                        replace(R.id.fragment_container, selectedFragment, "homeFragment").
+                        addToBackStack("homeFragment").commit();
                 break;
             case R.id.nav_add:
+                if (activeFragment instanceof AddFragment) {
+                    return true;
+                }
                 selectedFragment = new AddFragment();
                 invalidateOptionsMenu();
                 getSupportFragmentManager().beginTransaction().
                         setCustomAnimations(R.anim.slide_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out).
-                        replace(R.id.fragment_container, selectedFragment).addToBackStack("addFragment").commit();
+                        replace(R.id.fragment_container, selectedFragment).
+                        addToBackStack("addFragment").commit();
                 break;
             case R.id.nav_quiz:
+                if (activeFragment instanceof QuizFragment || activeFragment instanceof QuizEndFragment) {
+                    return true;
+                }
                 selectedFragment = new QuizFragment();
                 invalidateOptionsMenu();
                 getSupportFragmentManager().beginTransaction().
                         setCustomAnimations(R.anim.slide_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out).
-                        replace(R.id.fragment_container, selectedFragment).addToBackStack("quizFragment").commit();
+                        replace(R.id.fragment_container, selectedFragment).
+                        addToBackStack("quizFragment").commit();
                 break;
         }
         return true;
@@ -397,8 +414,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Fragment myFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-        if (myFragment != null && (myFragment instanceof HomeFragment || myFragment instanceof QuizFragment ||
-                myFragment instanceof AddFragment || myFragment instanceof QuizEndFragment)) {
+        if ((myFragment instanceof HomeFragment ||
+                myFragment instanceof QuizFragment ||
+                myFragment instanceof AddFragment ||
+                myFragment instanceof QuizEndFragment)) {
             if (backPressedTime+1000>System.currentTimeMillis()) {
                 backToast.cancel();
                 finish();
