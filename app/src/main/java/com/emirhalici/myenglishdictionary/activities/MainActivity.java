@@ -156,6 +156,9 @@ public class MainActivity extends AppCompatActivity {
             menu.findItem(R.id.compact).setVisible(false);
             menu.findItem(R.id.app_bar_search).setVisible(false);
             menu.findItem(R.id.dark).setVisible(false);
+            menu.findItem(R.id.exportdict).setVisible(false);
+            menu.findItem(R.id.importdict).setVisible(false);
+            menu.findItem(R.id.aboutme).setVisible(false);
         }
         return super.onPrepareOptionsMenu(menu);
     }

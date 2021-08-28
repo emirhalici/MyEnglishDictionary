@@ -19,6 +19,8 @@ import com.emirhalici.myenglishdictionary.utils.DatabaseHelper;
 import com.emirhalici.myenglishdictionary.activities.MainActivity;
 import com.emirhalici.myenglishdictionary.R;
 import com.emirhalici.myenglishdictionary.models.WordModel;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -42,10 +44,16 @@ public class HomeFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+
+        FloatingActionButton fab_add = view.findViewById(R.id.fab_add);
+        fab_add.setOnClickListener(v -> {
+            BottomNavigationView bottomNavigationView = view.getRootView().findViewById(R.id.bottom_navigation);
+            bottomNavigationView.setSelectedItemId(R.id.nav_add);
+        });
+
         mRecyclerView = view.findViewById(R.id.rv_home);
         DatabaseHelper databaseHelper = new DatabaseHelper(getContext());
         ArrayList<WordModel> wordList = databaseHelper.getEveryWord();
-
         Bundle args = getArguments();
         try {
             if (args != null) {
