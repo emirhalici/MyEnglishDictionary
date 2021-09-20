@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
@@ -26,6 +25,7 @@ import android.widget.Toast;
 import com.emirhalici.myenglishdictionary.fragments.AddMFragment;
 import com.emirhalici.myenglishdictionary.fragments.QuizFragment;
 import com.emirhalici.myenglishdictionary.R;
+import com.emirhalici.myenglishdictionary.fragments.TabbedHomeFragment;
 import com.emirhalici.myenglishdictionary.models.WordModel;
 import com.emirhalici.myenglishdictionary.fragments.AboutFragment;
 import com.emirhalici.myenglishdictionary.fragments.AddFragment;
@@ -87,7 +87,11 @@ public class MainActivity extends AppCompatActivity {
                     getSupportFragmentManager().popBackStack("quizEndFragment", 0);
             }
         } else {
-            openHomeFragment(sortType);
+            getSupportFragmentManager().beginTransaction().
+                    setCustomAnimations(R.anim.slide_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out).
+                    replace(R.id.fragment_container, new TabbedHomeFragment(),"home_tabbed").
+                    addToBackStack("home_tabbed").commit();
+            //openHomeFragment(sortType);
         }
     }
 
@@ -150,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
             menu.findItem(R.id.aboutme).setVisible(false);
         }
         // if fragment isn't homefragment, disable most topbar options
-        if (!(fragment instanceof HomeFragment)) {
+        if (!(fragment instanceof TabbedHomeFragment || fragment instanceof HomeFragment)) {
             menu.findItem(R.id.sort).setVisible(false);
             menu.findItem(R.id.filter).setVisible(false);
             menu.findItem(R.id.compact).setVisible(false);
@@ -383,10 +387,14 @@ public class MainActivity extends AppCompatActivity {
                 args.putString("sortType", sortType);
                 selectedFragment.setArguments(args);
                 invalidateOptionsMenu();
+//                getSupportFragmentManager().beginTransaction().
+//                        setCustomAnimations(R.anim.slide_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out).
+//                        replace(R.id.fragment_container, selectedFragment, "homeFragment").
+//                        addToBackStack("homeFragment").commit();
                 getSupportFragmentManager().beginTransaction().
                         setCustomAnimations(R.anim.slide_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out).
-                        replace(R.id.fragment_container, selectedFragment, "homeFragment").
-                        addToBackStack("homeFragment").commit();
+                        replace(R.id.fragment_container, new TabbedHomeFragment(),"home_tabbed").
+                        addToBackStack("home_tabbed").commit();
                 break;
             case R.id.nav_add:
                 if (activeFragment instanceof AddFragment) {
@@ -417,7 +425,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Fragment myFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-        if ((myFragment instanceof HomeFragment ||
+        if ((myFragment instanceof TabbedHomeFragment ||
                 myFragment instanceof QuizFragment ||
                 myFragment instanceof AddFragment ||
                 myFragment instanceof QuizEndFragment)) {
@@ -434,7 +442,7 @@ public class MainActivity extends AppCompatActivity {
             if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
                 invalidateOptionsMenu();
                 if (myFragment instanceof DisplayWordFragment) {
-                    getSupportFragmentManager().popBackStack("homeFragment",0);
+                    getSupportFragmentManager().popBackStack("home_tabbed",0);
                 } else
                 {
                     getSupportFragmentManager().popBackStack();

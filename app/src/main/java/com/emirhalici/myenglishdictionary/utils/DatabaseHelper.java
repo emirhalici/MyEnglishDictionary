@@ -41,7 +41,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put("EXAMPLE", wordModel.getExample());
 
         long insert = db.insert("dictionary", null, cv);
-        db.close();
+        //db.close();
         if (insert==-1) {
             return false;
         } else {
@@ -54,7 +54,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         String queryString = "DELETE FROM dictionary WHERE ID = " + wordModel.getId();
         Cursor cursor = db.rawQuery(queryString, null);
-        db.close();
+        //db.close();
         if (cursor.moveToFirst()) {
             return true;
         } else {
@@ -76,7 +76,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put("EXAMPLE", wordModel.getExample());
         int wordId = wordModel.getId();
         int val = db.update("dictionary", cv, "ID=?", new String[]{String.valueOf(wordId)});
-        db.close();
+        //db.close();
         //Log.e("Database Helper", String.valueOf(wordId));
         //WordModel new_word = getOne(wordId);
         //Log.e("Database Helper", new_word.toString());
@@ -104,7 +104,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String w_Type = cursor.getString(2);
         String w_Text = cursor.getString(3);
         String w_Example = cursor.getString(4);
-        db.close();
+        //db.close();
         wordModel = new WordModel(wordId, w_Word, w_Type,w_Text, w_Example);
         return wordModel;
     }
@@ -139,7 +139,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         // close both the cursor and db when done.
         cursor.close();
-        db.close();
+        //db.close();
         return returnList;
     }
 
@@ -174,7 +174,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // close both the cursor and db when done.
         cursor.close();
-        db.close();
+        //db.close();
         return returnList;
     }
 
@@ -201,7 +201,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         // close both the cursor and db when done.
         cursor.close();
-        db.close();
+        //db.close();
         return returnList;
     }
 

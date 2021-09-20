@@ -3,12 +3,24 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../layout/custom_preview.xml" value="0.2604501607717042" />
         <entry key="app/src/main/res/layout-land/fragment_quiz_end.xml" value="0.2623456790123457" />
-        <entry key="app/src/main/res/layout/compact_card.xml" value="0.5337620578778135" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/add_item_card.xml" value="0.40013453297290924" />
+        <entry key="app/src/main/res/layout/compact_card.xml" value="0.45" />
+        <entry key="app/src/main/res/layout/fragment_about.xml" value="0.16510416666666666" />
         <entry key="app/src/main/res/layout/fragment_add.xml" value="0.5094685054739462" />
         <entry key="app/src/main/res/layout/fragment_display_word.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/fragment_favourite.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_favourites.xml" value="0.27611408679101423" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.4204034094721306" />
+        <entry key="app/src/main/res/layout/fragment_home_tabbed.xml" value="0.335" />
         <entry key="app/src/main/res/layout/fragment_quiz.xml" value="0.26721014492753625" />
         <entry key="app/src/main/res/layout/fragment_quiz_end.xml" value="0.26721014492753625" />
+        <entry key="app/src/main/res/layout/fragment_quiz_vocabulary.xml" value="1.1780898988583934" />
+        <entry key="app/src/main/res/layout/fragment_study_list.xml" value="0.10326086956521739" />
+        <entry key="app/src/main/res/layout/home_item_card.xml" value="0.375" />
+        <entry key="app/src/main/res/menu/top_navigation.xml" value="0.275" />
       </map>
     </option>
   </component>
