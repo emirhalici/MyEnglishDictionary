@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -90,12 +91,11 @@ public class HomeFragment extends Fragment {
         }
 
         assert activity != null;
-        if (activity.finalWordList!=null && !activity.finalWordList.isEmpty() && activity.finalWordList!=databaseHelper.getEveryWord() && activity.finalWordList.size()!=databaseHelper.getEveryWord().size()) {
-            activity.applyQueryTextChange();
+        if (!activity.searchQuery.equals("")) {
             wordList = activity.finalWordList;
+            if (wordList.isEmpty()) Toast.makeText(getContext(), "The word could not be found.", Toast.LENGTH_SHORT).show();
         }
 
-        //mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getContext());
         mAdapter = new AllWordsAdapter(wordList, getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);

@@ -45,7 +45,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     private long backPressedTime;
     public ArrayList<String> finalTypeList = new ArrayList<>();
-    public String searchQuery;
+    public String searchQuery = "";
     public ArrayList<WordModel> finalWordList = new ArrayList<>();
     Toast backToast;
 
@@ -116,15 +116,17 @@ public class MainActivity extends AppCompatActivity {
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                getSupportFragmentManager().beginTransaction().
-                        setCustomAnimations(R.anim.slide_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out).
-                        replace(R.id.fragment_container,new HomeFragment(),"homeFragment").addToBackStack("homeFragment").commit();
+                applyQueryTextChange();
+                openTabbedHomeFragment(true);
                 return false;
             }
             @Override
             public boolean onQueryTextChange(String newText) {
                 searchQuery = newText;
-                applyQueryTextChange();
+                if (searchQuery.equals("")) {
+                    applyQueryTextChange();
+                    openTabbedHomeFragment(true);
+                }
                 return false;
             }
         });
@@ -132,8 +134,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public boolean applyQueryTextChange() {
-        finalWordList.removeAll(finalWordList);
         DatabaseHelper databaseHelper = new DatabaseHelper(getApplicationContext());
+        if (searchQuery.equals("")) {
+            finalWordList = databaseHelper.getEveryWord();
+            return true;
+        }
+        finalWordList.removeAll(finalWordList);
         ArrayList<WordModel> initialList = databaseHelper.getEveryWord();
         for (WordModel wordModel : initialList) {
             String wordName = wordModel.getWord().toLowerCase();
@@ -142,6 +148,20 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         return true;
+    }
+
+    public void openTabbedHomeFragment(boolean addToBackStack) {
+        if (addToBackStack) {
+            getSupportFragmentManager().beginTransaction().
+                    setCustomAnimations(R.anim.slide_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out).
+                    replace(R.id.fragment_container, new TabbedHomeFragment(),"home_tabbed").
+                    addToBackStack("home_tabbed").commit();
+        } else {
+            getSupportFragmentManager().beginTransaction().
+                    setCustomAnimations(R.anim.slide_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out).
+                    replace(R.id.fragment_container, new TabbedHomeFragment(),"home_tabbed").
+                    commit();
+        }
     }
 
     // call invalidateOptionsMenu() to call this method
