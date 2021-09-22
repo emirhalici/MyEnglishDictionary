@@ -122,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
             }
             @Override
             public boolean onQueryTextChange(String newText) {
+                if (searchQuery.equals(newText)) return false;
                 searchQuery = newText;
                 if (searchQuery.equals("")) {
                     applyQueryTextChange();
