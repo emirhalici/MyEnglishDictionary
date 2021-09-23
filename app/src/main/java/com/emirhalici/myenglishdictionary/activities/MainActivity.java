@@ -394,7 +394,7 @@ public class MainActivity extends AppCompatActivity {
         Fragment selectedFragment = null;
         switch (item.getItemId()) {
             case R.id.nav_home:
-                if (activeFragment instanceof HomeFragment) {
+                if (activeFragment instanceof TabbedHomeFragment) {
                     RecyclerView rv = activeFragment.getView().findViewById(R.id.rv_home);
                     if (rv != null) {
                         rv.smoothScrollToPosition(0);
